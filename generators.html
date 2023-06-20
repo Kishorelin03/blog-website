@@ -1,0 +1,242 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaleekun | Generators</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon.png">
+    <!-- Remix icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Swiper.js styles -->
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css"/>
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+
+    <link rel="stylesheet" href="./assets/css/prism.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+
+        <nav class="navbar container">
+            <a href="./index.html">
+                <h2 class="logo">Kaleekun</h2>
+            </a>
+    
+            <div class="menu" id="menu">
+                <ul class="list">
+                    <li class="list-item">
+                        <a href="./index.html" class="list-link ">Home</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Reviews</a>
+                    </li>
+                    <!-- <li class="list-item">
+                        <a href="#Quick-read" class="list-link">Quick-read</a>
+                    </li> -->
+                    <li class="list-item">
+                        <a href="./author.html" class="list-link">Author</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Contact</a>
+                    </li>
+                    
+                    <!-- <li class="list-item">
+                        <a href="#" class="list-link screen-lg-hidden">Sign in</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link screen-lg-hidden">Sign up</a>
+                    </li> -->
+                </ul>
+            </div>
+    
+            <div class="list list-right">
+                <button class="btn place-items-center" id="theme-toggle-btn">
+                    <i class="ri-sun-line sun-icon"></i>
+                    <i class="ri-moon-line moon-icon"></i>
+                </button>
+    
+                <button class="btn place-items-center" id="search-icon">
+                    <i class="ri-search-line"></i>
+                </button>
+    
+                <button class="btn place-items-center screen-lg-hidden menu-toggle-icon" id="menu-toggle-icon" id="theme-toggle-btn">
+                    <i class="ri-menu-3-line open-menu-icon"></i>
+                    <i class="ri-close-line close-menu-icon"></i>
+                </button>
+    
+                <!-- <a href="#" class="list-link screen-sm-hidden">Sign in</a>
+                <a href="#" class="list-link screen-sm-hidden btn sign-up-btn fancy-border"> 
+                    <span>Sign up</span>
+                </a> -->
+    
+            </div>
+        </nav>
+    </header>
+    <!-- Search -->
+    <div class="search-form-container container" id="search-form-container">
+
+        <div class="form-container-inner">
+
+            <form action="" class="form">
+                <input type="text" class="form-input" placeholder="What are looking for?">
+                <button class="btn form-btn" type="submit">
+                    <i class="ri-search-line"></i>
+                </button>
+            </form>
+            <span class="form-note">Or press ESC to close.</span>
+        </div>
+
+        <button class="btn form-close-btn place-items-center" id="form-close-btn">
+            <i class="ri-close-line"></i>
+        </button>
+
+    </div>
+    <!-- Blog post -->
+    <section class="blog-post section-header-offset">
+        <div class="blog-post-container container">
+
+            <div class="blog-post-data">
+                <h3 class="title blog-post-title">Generators</h3>
+
+                <div class="article-data">
+                    <span>Dec 6 2021</span>
+                    <span class="article-data-spacer"></span>
+                    <span>4 min read</span>
+                </div>
+                <img src="./assets/images/featured/featured-1.jpg" alt="">
+            </div>
+
+            <div class="container">
+                <h3>Generators</h3>
+                <p>
+                    Topic on generators. Use case, wherever memory efficiency is most important. Simple generator is a function that has the 'yield' keyword in its scope. Usage is simple - first call the function to remember parameters sent in && use 'next' to iterate the elements, next in queue.</p>
+                <p>Example:
+                    Say you want to generate Fibonacci series which will provide the next number in the series, only when it is asked for. This is done by using 'next' builtin function.</p>
+
+
+                <div class="code-container">
+                    <div class="code-wrapper">
+                        <pre>
+                            <code id="code" class="language-python">
+                                def fibgenerator(firstSeedNum, secondSeedNum):
+                                while True:
+                                    temp = firstSeedNum + secondSeedNum
+                                    yield temp  # this statement suspends the function execution, until 'next' is called again
+                                    firstSeedNum  = secondSeedNum
+                                    secondSeedNum = temp
+    
+                                # two step process, create a generator object and iterate over the returned generator object. Creating generator
+    
+                                a = fibgenerator(0, 1) # this creates a generator object, that can be iterated to get the next element
+                                # the above statement just packed the arguments and keep it ready for iteration
+                                b = fibgenerator(3, 27) # this creates another generator object, with different initial seed numbers
+                                for i in range(10):
+                                print(next(a)) # this is a generator that will generate elements infinitely, since, there is a while loop, that's always true
+                                            # when the next is called for the first time, temp is intermittently returned with function execution suspension
+                                            # only when the next is called for the second time, the function is reentered and start from the very next statement, from where it left off
+                                            # you will SURPRISED to read about coroutine, coyield and coreturn -- which were added in C++ 20 [we are seriously outdated, look at the memory layout of these features]
+                                for i in range(20):
+                                print(next(b))
+    
+                                c = list(a) # both these lines will cause you machine to hang,
+                                d = list(b) # because, generator object will be iterated forever to fill up the list. So caution - advised.
+                                # Apart from the above mentioned drawback, generators just remembers, only the required information to move ahead with execution.
+                                # for our examples -- first two seed elements will be remembered in a and b respectively.
+                            </code>
+                        </pre>
+                        <button id="copy-button">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer section">
+        <div class="footer-container container d-grid">
+            <div class="company-data">
+                <a href="./index.html">
+                    <h2 class="logo">Kaleekun</h2>
+                </a>
+                <p class="company-description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi voluptatibus omnis odio voluptas itaque dolorum facere molestias iusto necessitatibus, 
+                </p>
+
+                <ul class="list social-media">
+                    <li class="list-item">
+                        <a href="#" class="list-link">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">
+                            <i class="ri-facebook-circle-line"></i>
+                        </a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">
+                            <i class="ri-twitter-line"></i>
+                        </a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">
+                            <i class="ri-pinterest-line"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <span class="copyright-notice">&copy; 2023 Kaleekun. All rights reserved.</span>
+            </div>
+
+
+
+            <div>
+                <h6 class="title footer-title">Useful Links</h6>
+                <ul class="list footer-list">
+                    <li class="list-item">
+                        <a href="#" class="list-link">Python</a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">Blogs</a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">Assignments</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="title footer-title">Company</h6>
+                <ul class="list footer-list">
+                    <li class="list-item">
+                        <a href="#" class="list-link">Contact</a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="#" class="list-link">About Us</a>
+                    </li>
+
+                    <li class="list-item">
+                        <a href="./author.html" class="list-link">Author</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper.js -->
+    <script src="./assets/js/swiper-bundle.min.js"></script>
+    <!-- Custom script -->
+    <script src="./assets/js/main.js"></script>
+
+    <script src="./assets/js/prism.js"></script>
+</body>
+</html>
